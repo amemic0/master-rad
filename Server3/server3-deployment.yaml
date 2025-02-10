@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server3-deployment
+  namespace: master-rad
+  labels:
+    app: server3-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server3-app
+  template:
+    metadata:
+      labels:
+        app: server3-app
+    spec:
+      nodeSelector:
+        role: worker3
+      containers:
+      - name: server3-container
+        image: arminme/master-rad:server3-v3
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: "900m"
+            memory: "956Mi"
+          requests:
+            cpu: "400m"
+            memory: "256Mi"
+        env:
+        - name: SERVER2_URL
+          value: "http://server2-service:8080/data"
+        - name: SERVER1_URL
+          value: "http://server-service:8080/data"
+        - name: POSTGRES_HOST
+          value: "baza-podataka-service"  
+        - name: POSTGRES_DB
+          value: "mydatabase"
+        - name: POSTGRES_USER
+          value: "admin"
+        - name: POSTGRES_PASSWORD
+          value: "adminpassword"
+        - name: POSTGRES_PORT
+          value: "5432"
+      - name: tcpdump
+        image: corfr/tcpdump
+        command: ["/bin/sh", "-c", "tcpdump -i any -w /tmp/server3.pcap"]
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN  # Omogućava hvatanje mrežnog saobraćaja
+        volumeMounts:
+        - mountPath: "/tmp"
+          name: tcpdump-storage
+      volumes:
+      - name: tcpdump-storage
+        emptyDir: {}
