@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intersection3-deployment
+  namespace: master-rad
+  labels:
+    app: intersection3-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: intersection3-app
+  template:
+    metadata:
+      labels:
+        app: intersection3-app
+    spec:
+      nodeSelector:
+        role: master2
+      containers:
+        - name: intersection3-container
+          image: arminme/master-rad:intersection3-deployment-final
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVER_URL
+              value: "http://server5-service:8080/data" 
+            - name: WAIT_INTERVAL
+              value: "1"
+          resources:
+            requests:
+              cpu: "100m"
+            limits:
+              cpu: "200m"
