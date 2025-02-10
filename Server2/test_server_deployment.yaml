@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server5-deployment
+  namespace: master-rad  
+  labels:
+    app: server5-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server5-app
+  template:
+    metadata:
+      labels:
+        app: server5-app
+    spec:
+      nodeSelector:
+        role: master3
+      containers:
+      - name: server5-container
+        image: arminme/master-rad:server2-v2
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: "200m"  
+          requests:
+            cpu: "100m"  
+        env:
+        - name: POSTGRES_HOST
+          value: "baza-podataka-service"  
+        - name: POSTGRES_DB
+          value: "mydatabase"
+        - name: POSTGRES_USER
+          value: "admin"
+        - name: POSTGRES_PASSWORD
+          value: "adminpassword"
+        - name: POSTGRES_PORT
+          value: "5432"
+      - name: tcpdump
+        image: corfr/tcpdump
+        command: ["/bin/sh", "-c", "tcpdump -i any -w /tmp/server5.pcap"]
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN  # Omogućava hvatanje mrežnog prometa
+        volumeMounts:
+        - mountPath: "/tmp"
+          name: tcpdump-storage
+      volumes:
+      - name: tcpdump-storage
+        emptyDir: {}
