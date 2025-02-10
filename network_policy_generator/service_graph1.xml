@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFV xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../xsd/nfvSchema.xsd">
+
+    <graphs>
+        <graph id="0">
+
+            <node functional_type="WEBSERVER" name="192.168.172.172">
+                <neighbour name="1.0.0.1" />
+                <configuration description="e1" name="httpserver1">
+                    <webserver>
+                        <name>192.168.172.172</name>
+                    </webserver>
+                </configuration>
+            </node>
+
+            <node functional_type="WEBSERVER" name="192.168.172.173">
+                <neighbour name="1.0.0.2" />
+                <configuration description="e2" name="httpserver2">
+                    <webserver>
+                        <name>192.168.172.173</name>
+                    </webserver>
+                </configuration>
+            </node>
+
+            <node functional_type="WEBSERVER" name="192.168.172.176">
+                <neighbour name="1.0.0.3" />
+                <configuration description="e3" name="httpserver3">
+                    <webserver>
+                        <name>192.168.172.176</name>
+                    </webserver>
+                </configuration>
+            </node>
+
+            <node name="1.0.0.1">
+                <neighbour name="192.168.172.172" />
+                <neighbour name="192.168.172.174" />
+            </node>
+
+            <node name="1.0.0.2">
+                <neighbour name="192.168.172.173" />
+                <neighbour name="192.168.172.174" />
+            </node>
+
+            <node name="1.0.0.3">
+                <neighbour name="192.168.172.176" />
+                <neighbour name="192.168.172.174" />
+            </node>
+
+            <node name="1.0.0.6">
+                <neighbour name="192.168.172.177" />
+                <neighbour name="192.168.172.178" />
+            </node>
+
+
+
+            <node functional_type="FORWARDER" name="192.168.172.174">
+                <neighbour name="1.0.0.1" />
+                <neighbour name="1.0.0.2" />
+                <neighbour name="1.0.0.3" />
+                <neighbour name="1.0.0.4" />
+                <configuration name="ForwardConf">
+                    <forwarder>
+                        <name>Forwarder</name>
+                    </forwarder>
+                </configuration>
+            </node>
+
+            <node functional_type="WEBCLIENT" name="192.168.172.177">
+                <neighbour name="1.0.0.4" />
+                <neighbour name="1.0.0.6" />
+                <configuration description="c1" name="client1">
+                    <webclient nameWebServer="192.168.172.172" />
+                </configuration>
+            </node>
+
+            <node name="1.0.0.4">
+                <neighbour name="192.168.172.174" />
+                <neighbour name="192.168.172.177" />
+                <neighbour name="192.168.172.178" />
+            </node>
+
+            <node functional_type="WEBSERVER" name="192.168.172.178">
+                <neighbour name="1.0.0.4" />
+                <neighbour name="1.0.0.6" />
+                <configuration description="n1" name="nadzor">
+                    <webserver>
+                        <name>192.168.172.178</name>
+                    </webserver>
+                </configuration>
+            </node>
+
+        </graph>
+    </graphs>
+
+    <Constraints>
+        <NodeConstraints/>
+        <LinkConstraints/>
+    </Constraints>
+
+    <PropertyDefinition>
+    
+            <!--network policy 1-->
+            <Property graph="0" name="ReachabilityProperty" src="192.168.172.177" dst="192.168.172.174" dst_port="8080" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.177" dst="192.168.172.174" dst_port="0-8079" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.177" dst="192.168.172.174" dst_port="8081-65535" lv4proto="TCP"/>
+
+            <!--network policy 2-->
+            <Property graph="0" name="ReachabilityProperty" src="192.168.172.177" dst="192.168.172.172" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="ReachabilityProperty" src="192.168.172.177" dst="192.168.172.173" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="ReachabilityProperty" src="192.168.172.177" dst="192.168.172.176" dst_port="0-65535" lv4proto="TCP"/>
+
+            <!--network policy 4-->
+            <Property graph="0" name="IsolationProperty" src="192.168.172.177" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
+
+            <!--network policy 5-->
+            <Property graph="0" name="IsolationProperty" src="192.168.172.174" dst="192.168.172.173" dst_port="0-65535" lv4proto="TCP"/>
+
+            <!--network policy 5-->
+            <Property graph="0" name="IsolationProperty" src="192.168.172.172" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.173" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.174" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.176" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
+    
+                
+    </PropertyDefinition>
+
+</NFV>

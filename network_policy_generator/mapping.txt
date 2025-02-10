@@ -1,0 +1,9 @@
+<192.168.172.172 - baza-podataka>
+<192.168.172.173 -  server2-app>
+<192.168.172.174 -  server3-app>
+<192.168.172.176 -  server-app>
+<192.168.172.177 -  intersection4-app>
+<192.168.172.177 -  intersection3-app>
+<192.168.172.178 -  server5-app>
+
+
