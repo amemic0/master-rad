@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intersection4-deployment
+  namespace: master-rad
+  labels:
+    app: intersection4-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: intersection4-app
+  template:
+    metadata:
+      labels:
+        app: intersection4-app
+    spec:
+      nodeSelector:
+        role: master2
+      containers:
+      - name: intersection4-container
+        image: arminme/master-rad:intersection4-deployment-final-v2
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+          requests:
+            cpu: "200m"
+            memory: "128Mi"
+        env:
+        - name: SERVER3_URL
+          value: "http://server3-service:8080/data"
+        - name: WAIT_INTERVAL
+          value: "1"  # Interval u sekundama
