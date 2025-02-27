@@ -110,18 +110,25 @@
             <Property graph="0" name="ReachabilityProperty" src="192.168.172.177" dst="192.168.172.173" dst_port="0-65535" lv4proto="TCP"/>
             <Property graph="0" name="ReachabilityProperty" src="192.168.172.177" dst="192.168.172.176" dst_port="0-65535" lv4proto="TCP"/>
 
-            <!--network policy 4-->
-            <Property graph="0" name="IsolationProperty" src="192.168.172.177" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
-
             <!--network policy 5-->
             <Property graph="0" name="IsolationProperty" src="192.168.172.174" dst="192.168.172.173" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.177" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
 
             <!--network policy 5-->
             <Property graph="0" name="IsolationProperty" src="192.168.172.172" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
             <Property graph="0" name="IsolationProperty" src="192.168.172.173" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
             <Property graph="0" name="IsolationProperty" src="192.168.172.174" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
             <Property graph="0" name="IsolationProperty" src="192.168.172.176" dst="192.168.172.178" dst_port="0-65535" lv4proto="TCP"/>
-    
+
+            <Property graph="0" name="IsolationProperty" src="192.168.172.178" dst="192.168.172.172" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.178" dst="192.168.172.173" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.178" dst="192.168.172.174" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.178" dst="192.168.172.176" dst_port="0-65535" lv4proto="TCP"/>
+
+
+            <Property graph="0" name="IsolationProperty" src="192.168.172.173" dst="192.168.172.174" dst_port="0-65535" lv4proto="TCP"/>
+            <Property graph="0" name="IsolationProperty" src="192.168.172.178" dst="192.168.172.177" dst_port="0-65535" lv4proto="TCP"/>
+
                 
     </PropertyDefinition>
 

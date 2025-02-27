@@ -1,56 +1,54 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: deny-intersection4-app-to-server3-app
+  name: auto-deny-baza-podataka
   namespace: master-rad
 spec:
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          app: intersection4-app
+          app: intersection3-app
     ports:
-    - endPort: 8079
+    - endPort: 65535
       port: 1
       protocol: TCP
-  podSelector:
-    matchLabels:
-      app: server3-app
-  policyTypes:
-  - Ingress
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: deny-intersection4-app-to-server3-app
-  namespace: master-rad
-spec:
-  ingress:
   - from:
     - podSelector:
         matchLabels:
           app: intersection4-app
     ports:
     - endPort: 65535
-      port: 8081
+      port: 1
       protocol: TCP
-  podSelector:
-    matchLabels:
-      app: server3-app
-  policyTypes:
-  - Ingress
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: deny-intersection4-app-to-baza-podataka
-  namespace: master-rad
-spec:
-  ingress:
   - from:
     - podSelector:
         matchLabels:
-          app: intersection4-app
+          app: server-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server2-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server3-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cattle-monitoring-system
     ports:
     - endPort: 65535
       port: 1
@@ -64,10 +62,18 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: deny-intersection4-app-to-server2-app
+  name: auto-deny-intersection3-app
   namespace: master-rad
 spec:
   ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: baza-podataka
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
   - from:
     - podSelector:
         matchLabels:
@@ -76,23 +82,164 @@ spec:
     - endPort: 65535
       port: 1
       protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server2-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server3-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cattle-monitoring-system
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
   podSelector:
     matchLabels:
-      app: server2-app
+      app: intersection3-app
   policyTypes:
   - Ingress
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: deny-intersection4-app-to-server-app
+  name: auto-deny-intersection4-app
   namespace: master-rad
 spec:
   ingress:
   - from:
     - podSelector:
         matchLabels:
+          app: baza-podataka
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: intersection3-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server2-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server3-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server5-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cattle-monitoring-system
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: intersection4-app
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auto-deny-server-app
+  namespace: master-rad
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: baza-podataka
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: intersection3-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
           app: intersection4-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server2-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server3-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cattle-monitoring-system
     ports:
     - endPort: 65535
       port: 1
@@ -106,7 +253,112 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: deny-intersection4-app-to-server5-app
+  name: auto-deny-server2-app
+  namespace: master-rad
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: baza-podataka
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: intersection3-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: intersection4-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cattle-monitoring-system
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: server2-app
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auto-deny-server3-app
+  namespace: master-rad
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: baza-podataka
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: intersection3-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: intersection4-app
+    ports:
+    - port: 8080
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: server-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cattle-monitoring-system
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: server3-app
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auto-deny-server5-app
   namespace: master-rad
 spec:
   ingress:
@@ -114,6 +366,14 @@ spec:
     - podSelector:
         matchLabels:
           app: intersection4-app
+    ports:
+    - endPort: 65535
+      port: 1
+      protocol: TCP
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cattle-monitoring-system
     ports:
     - endPort: 65535
       port: 1
